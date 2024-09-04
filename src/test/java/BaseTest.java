@@ -10,7 +10,7 @@ public class BaseTest {
 
     @BeforeMethod
     public void beforeMethod() {
-        System.setProperty("webdriver.chrome.driver", "C://Program Files (x86)//WebDrivers//chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "/Users/gtv/Desktop/chromedriver");
 
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();

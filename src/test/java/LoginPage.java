@@ -1,23 +1,26 @@
-import com.google.common.eventbus.SubscriberExceptionContext;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pageObject.LandingPage;
 
-import java.time.Duration;
 import java.util.List;
 
-public class loginPage extends BaseTest {
+public class LoginPage extends BaseTest {
     @Test
-    public void test() throws InterruptedException {
-        By userEmail = By.id("userEmail");
-        By userPassword = By.id("userPassword");
-        By loginButton = By.id("login");
+    public void endToEndTest() {
+
+        //Step1 - Login
+        String email = "ggtv@ggtv.ge";
+        String password = "Gg123!!ggtv";
+
+        LandingPage landingPage = new LandingPage(driver);
+        landingPage.login(email,password);
+
+        //Step2 - Choose product from product catalog
+
 
         By productTitle = By.cssSelector("b");
         By addToCardButton = By.cssSelector(".card-body button:last-of-type");
@@ -29,14 +32,6 @@ public class loginPage extends BaseTest {
 
         By myCartTitle = By.cssSelector("div[class='heading cf'] h1");
 
-        String email = "ggtv@ggtv.ge";
-        String password = "Gg123!!ggtv";
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-
-        driver.findElement(userEmail).sendKeys(email);
-        driver.findElement(userPassword).sendKeys(password);
-        driver.findElement(loginButton).click();
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-3")));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingAlert));

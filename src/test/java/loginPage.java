@@ -2,6 +2,7 @@ import com.google.common.eventbus.SubscriberExceptionContext;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -11,7 +12,7 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 import java.util.List;
 
-public class loginPage extends BaseTest{
+public class loginPage extends BaseTest {
     @Test
     public void test() throws InterruptedException {
         By userEmail = By.id("userEmail");
@@ -40,7 +41,7 @@ public class loginPage extends BaseTest{
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-3")));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingAlert));
         List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
-        WebElement prodElements =  products.stream().filter(product -> product.findElement(productTitle).getText().equals("ZARA COAT 3")).findFirst().orElse(null);
+        WebElement prodElements = products.stream().filter(product -> product.findElement(productTitle).getText().equals("ZARA COAT 3")).findFirst().orElse(null);
         prodElements.findElement(addToCardButton).click();
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(productIsAddedOnCartAlert));
@@ -50,7 +51,7 @@ public class loginPage extends BaseTest{
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(myCartTitle));
         String cartTitle = driver.findElement(myCartTitle).getText();
-        Assert.assertEquals(cartTitle,"My Cart");
+        Assert.assertEquals(cartTitle, "My Cart");
 
 
         List<WebElement> cartProducts = driver.findElements(By.cssSelector(".cartSection h3"));
@@ -58,5 +59,18 @@ public class loginPage extends BaseTest{
         Assert.assertTrue(itemMatch);
 
         driver.findElement(By.cssSelector(".totalRow button")).click();
+
+
+        Actions actions = new Actions(driver);
+        actions.sendKeys(driver.findElement(By.cssSelector(".form-group input")),"Ge").build().perform();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ta-results")));
+        driver.findElement(By.cssSelector(".ta-item:nth-of-type(3)")).click();
+
+        //.action_submit doesn't work
+        driver.findElement(By.cssSelector(".actions"));
+
+        String confirmMessage = driver.findElement(By.cssSelector(".hero-primary")).getText();
+        Assert.assertTrue(confirmMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
     }
 }

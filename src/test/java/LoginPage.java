@@ -5,6 +5,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObject.LandingPage;
+import pageObject.ProductCatalogue;
 
 import java.util.List;
 
@@ -12,37 +13,24 @@ public class LoginPage extends BaseTest {
     @Test
     public void endToEndTest() {
 
-        //Step1 - Login
         String email = "ggtv@ggtv.ge";
         String password = "Gg123!!ggtv";
 
+        //Step1 - Login
         LandingPage landingPage = new LandingPage(driver);
         landingPage.login(email,password);
 
         //Step2 - Choose product from product catalog
+        ProductCatalogue productCatalogue = new ProductCatalogue(driver);
+        productCatalogue.waitForProductCatalogueToBeLoaded();
+        productCatalogue.waitForLoadingIconToBeInvisible();
+        productCatalogue.clickOnProductFromCatalogue("ZARA COAT 3");
+        productCatalogue.waitForProductIsAddedOnCartAlertToBeVisible();
+        productCatalogue.waitForLoadingIconToBeInvisible();
+        productCatalogue.clickOnCart();
 
-
-        By productTitle = By.cssSelector("b");
-        By addToCardButton = By.cssSelector(".card-body button:last-of-type");
-
-        By loadingAlert = By.cssSelector(".ng-animating");
-        By productIsAddedOnCartAlert = By.cssSelector("#toast-container");
-
-        By cartButton = By.xpath("(//button[@class='btn btn-custom'])[3]");
-
+        //3 -
         By myCartTitle = By.cssSelector("div[class='heading cf'] h1");
-
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-3")));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingAlert));
-        List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
-        WebElement prodElements = products.stream().filter(product -> product.findElement(productTitle).getText().equals("ZARA COAT 3")).findFirst().orElse(null);
-        prodElements.findElement(addToCardButton).click();
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(productIsAddedOnCartAlert));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingAlert));
-
-        driver.findElement(cartButton).click();
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(myCartTitle));
         String cartTitle = driver.findElement(myCartTitle).getText();

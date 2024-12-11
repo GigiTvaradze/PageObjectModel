@@ -1,5 +1,6 @@
 package pageObject;
 
+import abstractComponents.AbstractComponents;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
  * It follows the Page Object Model (POM) design pattern, encapsulating the web
  * elements and interactions related to the page.
  */
-public class LandingPage{
+public class LandingPage extends AbstractComponents {
 
     /**
      * WebDriver instance used to interact with the browser.
@@ -20,11 +21,16 @@ public class LandingPage{
      * Constructor to initialize the LandingPage class with a WebDriver instance.
      * It also uses the PageFactory to initialize web elements defined in this class.
      *
+     * The `super(driver)` call ensures that the constructor of the parent class is invoked,
+     * allowing it to perform its initialization tasks, such as setting up the WebDriver instance
+     * in the base class.
+     *
      * @param driver The WebDriver instance used for interacting with the web page.
      */
     public LandingPage(WebDriver driver){
-        this.driver=driver;
-        PageFactory.initElements(driver, this);
+        super(driver); // Calls the parent class's constructor to initialize shared WebDriver functionality.
+        this.driver = driver;
+        PageFactory.initElements(driver, this); // Initializes the web elements defined in this class.
     }
 
     @FindBy(id = "userEmail")

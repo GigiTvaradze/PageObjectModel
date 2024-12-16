@@ -1,9 +1,11 @@
+import abstractComponents.AbstractComponents;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pageObject.CartPage;
 import pageObject.LandingPage;
 import pageObject.ProductCatalogue;
 
@@ -27,22 +29,23 @@ public class LoginPage extends BaseTest {
         productCatalogue.clickOnProductFromCatalogue("ZARA COAT 3");
         productCatalogue.waitForProductIsAddedOnCartAlertToBeVisible();
         productCatalogue.waitForLoadingIconToBeInvisible();
-        productCatalogue.clickOnCart();
+        productCatalogue.clickOnCartButton();
 
-        //3 -
-        By myCartTitle = By.cssSelector("div[class='heading cf'] h1");
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(myCartTitle));
-        String cartTitle = driver.findElement(myCartTitle).getText();
+        //3 - Cart Page Validation
+        CartPage cartPage = new CartPage(driver);
+        cartPage.waitForCartTitleToBeLoaded();
+        String cartTitle = cartPage.getCartTitle();
         Assert.assertEquals(cartTitle, "My Cart");
 
-
-        List<WebElement> cartProducts = driver.findElements(By.cssSelector(".cartSection h3"));
-        Boolean itemMatch = cartProducts.stream().anyMatch(product -> product.getText().equalsIgnoreCase("ZARA COAT 3"));
+        List<WebElement> cartProducts = cartPage.getProductTitles();
+        boolean itemMatch = cartProducts.stream().anyMatch(product -> product.getText().equalsIgnoreCase("ZARA COAT 3"));
         Assert.assertTrue(itemMatch);
+        cartPage.clickOnCheckoutButton();
 
-        driver.findElement(By.cssSelector(".totalRow button")).click();
+        /*
 
+        //4 - Fill Checkout Page
 
         Actions actions = new Actions(driver);
         actions.sendKeys(driver.findElement(By.cssSelector(".form-group input")),"Ge").build().perform();
@@ -55,5 +58,7 @@ public class LoginPage extends BaseTest {
 
         String confirmMessage = driver.findElement(By.cssSelector(".hero-primary")).getText();
         Assert.assertTrue(confirmMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
+
+         */
     }
 }

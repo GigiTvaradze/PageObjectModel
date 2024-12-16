@@ -55,7 +55,7 @@ public class ProductCatalogue extends AbstractComponents {
         prodElements.findElement(addToCardButton).click();
     }
 
-    public void clickOnCart(){
-        cartButton.click();
+    public void clickOnCartButton(){
+        clickOnByWebElement(cartButton);
     }
 }

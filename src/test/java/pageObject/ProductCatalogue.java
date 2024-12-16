@@ -18,23 +18,14 @@ public class ProductCatalogue extends AbstractComponents {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(css = ".mb-3")
-    By productCatalogue;
-
-    @FindBy(css = ".ng-animating")
-    By loadingIcon;
-
-    @FindBy(css = ".card-body button:last-of-type")
-    By addToCardButton;
-
-    @FindBy(css = "b")
-    By productTitle;
-
-    @FindBy(css = "#toast-container")
-    By productIsAddedOnCartAlert;
+    By productCatalogue = By.cssSelector(".mb-3");
+    By loadingIcon = By.cssSelector(".ng-animating");
+    By addToCardButton = By.cssSelector(".card-body button:last-of-type");
+    By productTitle = By.cssSelector("b");
+    By productIsAddedOnCartAlert = By.cssSelector("#toast-container");
 
     @FindBy(xpath = "(//button[@class='btn btn-custom'])[3]")
-    WebElement cartButton;
+    private WebElement cartButton;
 
     public void waitForProductCatalogueToBeLoaded(){
         waitForElementToBeVisible(productCatalogue);

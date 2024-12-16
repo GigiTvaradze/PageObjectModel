@@ -16,17 +16,16 @@ public class Checkout extends AbstractComponents {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(css = ".form-group input")
-    WebElement selectCountry;
+    By countryResultList = By.cssSelector(".ta-results");
 
-    @FindBy(css = ".ta-results")
-    By countryResultList;
+    @FindBy(css = ".form-group input")
+    private WebElement selectCountry;
 
     @FindBy(css = ".ta-item:nth-of-type(3)")
-    WebElement countryGeorgia;
+    private WebElement countryGeorgia;
 
     @FindBy(css = ".actions")
-    WebElement placeOrderButton;
+    private WebElement placeOrderButton;
 
     public void selectCountry(String country){
         Actions actions = new Actions(driver);

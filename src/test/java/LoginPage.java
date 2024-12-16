@@ -7,7 +7,7 @@ import pageObject.*;
 import java.util.List;
 
 public class LoginPage extends BaseTest {
-    @Test
+    @Test()
     public void endToEndTest() {
 
         String email = "ggtv@ggtv.ge";

@@ -18,14 +18,11 @@ public class CartPage extends AbstractComponents {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(css = "div[class='heading cf'] h1")
-    By myCartTitle;
-
-    @FindBy(css = ".cartSection h3")
-    By productTitle;
+    By myCartTitle = By.cssSelector("div[class='heading cf'] h1");
+    By productTitle = By.cssSelector(".cartSection h3");
 
     @FindBy(css = ".totalRow button")
-    WebElement checkoutButton;
+    private WebElement checkoutButton;
 
     public void waitForCartTitleToBeLoaded(){
         waitForElementToBeVisible(myCartTitle);

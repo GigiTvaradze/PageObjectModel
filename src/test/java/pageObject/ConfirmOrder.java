@@ -1,6 +1,7 @@
 package pageObject;
 
 import abstractComponents.AbstractComponents;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,10 +15,9 @@ public class ConfirmOrder extends AbstractComponents {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(css = ".hero-primary")
-    WebElement confirmTitle;
+    By confirmTitle = By.cssSelector(".hero-primary");
 
     public String getConfirmTitle(){
-        return confirmTitle.getText();
+        return driver.findElement(confirmTitle).getText();
     }
 }

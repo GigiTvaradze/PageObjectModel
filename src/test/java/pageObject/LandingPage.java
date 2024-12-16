@@ -34,13 +34,13 @@ public class LandingPage extends AbstractComponents {
     }
 
     @FindBy(id = "userEmail")
-    WebElement userEmail;
+    private WebElement userEmail;
 
     @FindBy(id = "userPassword")
-    WebElement userPassword;
+    private WebElement userPassword;
 
     @FindBy(id = "login")
-    WebElement loginButton;
+    private WebElement loginButton;
 
     public void fillUserEmail(String email){
         userEmail.sendKeys(email);

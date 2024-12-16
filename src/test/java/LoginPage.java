@@ -5,10 +5,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pageObject.CartPage;
-import pageObject.Checkout;
-import pageObject.LandingPage;
-import pageObject.ProductCatalogue;
+import pageObject.*;
 
 import java.util.List;
 
@@ -32,7 +29,6 @@ public class LoginPage extends BaseTest {
         productCatalogue.waitForLoadingIconToBeInvisible();
         productCatalogue.clickOnCartButton();
 
-
         //3 - Cart Page Validation
         CartPage cartPage = new CartPage(driver);
         cartPage.waitForCartTitleToBeLoaded();
@@ -51,12 +47,9 @@ public class LoginPage extends BaseTest {
         //.action_submit doesn't work
         checkout.clickOnPlaceOrderButton();
 
-
         //5 - Confirm Order
-
-
-        String confirmMessage = driver.findElement(By.cssSelector(".hero-primary")).getText();
+        ConfirmOrder confirmOrder = new ConfirmOrder(driver);
+        String confirmMessage = confirmOrder.getConfirmTitle();
         Assert.assertTrue(confirmMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
-
     }
 }

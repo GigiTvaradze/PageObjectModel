@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObject.CartPage;
+import pageObject.Checkout;
 import pageObject.LandingPage;
 import pageObject.ProductCatalogue;
 
@@ -37,28 +38,25 @@ public class LoginPage extends BaseTest {
         cartPage.waitForCartTitleToBeLoaded();
         String cartTitle = cartPage.getCartTitle();
         Assert.assertEquals(cartTitle, "My Cart");
-
         List<WebElement> cartProducts = cartPage.getProductTitles();
         boolean itemMatch = cartProducts.stream().anyMatch(product -> product.getText().equalsIgnoreCase("ZARA COAT 3"));
         Assert.assertTrue(itemMatch);
         cartPage.clickOnCheckoutButton();
 
-        /*
-
         //4 - Fill Checkout Page
-
-        Actions actions = new Actions(driver);
-        actions.sendKeys(driver.findElement(By.cssSelector(".form-group input")),"Ge").build().perform();
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ta-results")));
-        driver.findElement(By.cssSelector(".ta-item:nth-of-type(3)")).click();
-
+        Checkout checkout = new Checkout(driver);
+        checkout.selectCountry("Ge");
+        checkout.waitForCountryResultListToBeLoaded();
+        checkout.clickOnCountry();
         //.action_submit doesn't work
-        driver.findElement(By.cssSelector(".actions"));
+        checkout.clickOnPlaceOrderButton();
+
+
+        //5 - Confirm Order
+
 
         String confirmMessage = driver.findElement(By.cssSelector(".hero-primary")).getText();
         Assert.assertTrue(confirmMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
 
-         */
     }
 }
